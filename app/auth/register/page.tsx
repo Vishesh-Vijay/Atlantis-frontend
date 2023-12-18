@@ -24,10 +24,12 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [name,setName] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
-
+  const [nameError,setNameError] = useState("");
+  const [isRegistered,setIsRegistered] = useState(false)
   const togglePasswordVisibility = ({ field }: { field: string }) => {
     if (field === "password") {
       setShowPassword(!showPassword);
@@ -40,6 +42,19 @@ const RegisterPage = () => {
     setPassword(value);
     validatePassword(value);
   };
+  const handleNameChange = (value: string) => {
+    setName(value);
+    validateName(value)
+  }
+
+  const validateName = (value:string) => {
+    if(value.length < 1){
+      setNameError("Name can't be empty.")
+    }
+    else{
+      setNameError("")
+    }
+  }
 
   const handleConfirmPasswordChange = (value: string) => {
     setConfirmPassword(value);
@@ -82,9 +97,23 @@ const RegisterPage = () => {
   };
 
   const isFormValid = () => {
-    return !passwordError && !confirmPasswordError && !emailError;
+    return !passwordError && !confirmPasswordError && !emailError && !nameError;
   };
 
+
+  const handleRegister = ()=>{
+    if(!isFormValid()){
+      return
+    }
+    const userData = {
+        name:name,
+        email:email,
+        password:password
+    }
+    console.log(userData)
+
+    setIsRegistered(true)
+  }
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -102,7 +131,13 @@ const RegisterPage = () => {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Name</Label>
-              <Input name="name" id="name" type="text" placeholder="John Doe" />
+              <Input 
+                name="name" 
+                id="name" 
+                type="text" 
+                placeholder="John Doe" 
+                onChange={(e) => handleNameChange(e.target.value) } 
+              />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
@@ -159,12 +194,12 @@ const RegisterPage = () => {
         </form>
       </CardContent>
       <CardFooter className="flex-col justify-evenly gap-2">
-        <Button variant="default" className="w-full" disabled={!isFormValid()}>
+        <Button variant="default" className="w-full" disabled={!isFormValid()} onClick={handleRegister}>
           Register
         </Button>
 
         {/* Display errors in the Alert component */}
-        {passwordError || confirmPasswordError || emailError ? (
+        {passwordError || confirmPasswordError || emailError || nameError ? (
           <Alert variant="destructive" className="mt-4">
             <AlertTitle>Error</AlertTitle>
             {passwordError && (
@@ -174,12 +209,19 @@ const RegisterPage = () => {
               <AlertDescription>{confirmPasswordError}</AlertDescription>
             )}
             {emailError && <AlertDescription>{emailError}</AlertDescription>}
+            {nameError && <AlertDescription>{nameError}</AlertDescription>}
           </Alert>
         ) : null}
+        {isRegistered ? (
+            <Alert variant="default" className="mt-4">
+                <AlertTitle>Success</AlertTitle>
+                <AlertDescription>Successfully registered</AlertDescription>
+            </Alert>
+            ) : null
+        }
       </CardFooter>
     </Card>
   );
 };
 
-// Export the RegisterPage component as the default export
 export default RegisterPage;

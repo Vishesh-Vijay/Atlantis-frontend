@@ -1,25 +1,23 @@
 'use client'
-import Image from 'next/image'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function Home() {
-  const router = useRouter() 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
+  const router = useRouter();
+
   useEffect(() => {
     if (!token) {
+   
       router.push("/auth/login");
     }
   }, [token, router]);
+
   return (
-   token?
-   (
-    <p className='text-red-500 font-bold'>
-      Hello luminar frontend
-   </p>
-   ):
-   (
-    null
-   ) 
-   
-  )
+    <>
+      {token ? (
+        <p className="text-red-500 font-bold">Hello luminar frontend</p>
+      ) : null}
+    </>
+  );
 }
