@@ -127,6 +127,7 @@ const RegisterPage = () => {
             <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="name">Name</Label>
               <Input 
+              className="text-purple-900"
                 name="name" 
                 id="name" 
                 type="text" 
@@ -137,6 +138,7 @@ const RegisterPage = () => {
             <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="email">Email</Label>
               <Input
+              className="text-purple-900"
                 name="email"
                 id="email"
                 type="email"
@@ -148,6 +150,7 @@ const RegisterPage = () => {
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
+                className="text-purple-900"
                   name="password"
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -168,6 +171,7 @@ const RegisterPage = () => {
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
                 <Input
+                className="text-purple-900"
                   name="confirmPassword"
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}

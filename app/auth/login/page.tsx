@@ -89,7 +89,7 @@ const LoginPage = () => {
               <Label className="py-1" htmlFor="email">Email</Label>
               <Input
             
-                className="bg-[#e8d5f8] border-transparent"
+                className="bg-[#e8d5f8] border-transparent text-purple-900"
     
                 name="email"
                 id="email"
@@ -102,7 +102,7 @@ const LoginPage = () => {
               <Label htmlFor="password" className="py-1">Password</Label>
               <div className="relative">
                 <Input
-                  className="bg-[#e8d5f8] border-transparent"
+                  className="bg-[#e8d5f8] border-transparent text-purple-900"
                   name="password"
                   id="password"
                   type={showPassword ? "text" : "password"}
