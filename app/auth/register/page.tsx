@@ -1,5 +1,7 @@
-import * as React from "react";
+"use client";
 
+import * as React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,10 +14,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-
+import { HiEye, HiEyeOff } from "react-icons/hi";
 
 const RegisterPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = ({field}:{field:string}) => {
+    if (field === "password") {
+      setShowPassword(!showPassword);
+    } else if (field === "confirmPassword") {
+      setShowConfirmPassword(!showConfirmPassword);
+    }
+  };
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -37,27 +49,53 @@ const RegisterPage = () => {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input name="email" id="email" type="email" placeholder="abc@gmail.com" />
+              <Input
+                name="email"
+                id="email"
+                type="email"
+                placeholder="abc@gmail.com"
+              />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input name="password" id="password" type="password" placeholder="*******" />
+              <div className="relative">
+                <Input
+                  name="password"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="*******"
+                />
+                <div
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => togglePasswordVisibility({ field: "password" })}
+                >
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
+                </div>
+              </div>
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input name="confirmPassword" id="confirmPassword" type="password" placeholder="*******" />
+              <div className="relative">
+                <Input
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="*******"
+                />
+                <div
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => togglePasswordVisibility({field:"confirmPassword"})}
+                >
+                  {showConfirmPassword ? <HiEye /> : <HiEyeOff />}
+                </div>
+              </div>
             </div>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex-col justify-evenly gap-2">
         <Button variant="default" className="w-full">
-          Login
-        </Button>
-        <p className="font-semibold">OR</p>
-
-        <Button variant="default" className="w-full">
-          <FcGoogle className="mr-2 h-4 w-4" /> Login with Google
+          Register
         </Button>
       </CardFooter>
     </Card>
