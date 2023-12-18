@@ -29,12 +29,12 @@ const RegisterPage = () => {
   };
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] bg-transparent border-transparent shadow-none">
       <CardHeader>
-        <CardTitle>Create your account</CardTitle>
-        <CardDescription className="text-xs">
+        <CardTitle className="text-purple-100 py-1">Create your account</CardTitle>
+        <CardDescription className="text-xs text-purple-300">
           Already have an account?
-          <Link href="/auth/login" className=" text-purple-800 font-bold">
+          <Link href="/auth/login"className=" text-purple-100 font-medium">
             {" "}
             Login here
           </Link>
@@ -43,11 +43,11 @@ const RegisterPage = () => {
       <CardContent>
         <form>
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
+            <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="name">Name</Label>
               <Input name="name" id="name" type="text" placeholder="John Doe" />
             </div>
-            <div className="flex flex-col space-y-1.5">
+            <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="email">Email</Label>
               <Input
                 name="email"
@@ -56,7 +56,7 @@ const RegisterPage = () => {
                 placeholder="abc@gmail.com"
               />
             </div>
-            <div className="flex flex-col space-y-1.5">
+            <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
@@ -69,11 +69,11 @@ const RegisterPage = () => {
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => togglePasswordVisibility({ field: "password" })}
                 >
-                  {showPassword ? <HiEye /> : <HiEyeOff />}
+                  {showPassword ? <HiEye className="text-purple-800" /> : <HiEyeOff className="text-purple-800" />}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col space-y-1.5">
+            <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
                 <Input
@@ -86,7 +86,7 @@ const RegisterPage = () => {
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => togglePasswordVisibility({field:"confirmPassword"})}
                 >
-                  {showConfirmPassword ? <HiEye /> : <HiEyeOff />}
+                  {showConfirmPassword ? <HiEye className="text-purple-800" /> : <HiEyeOff className="text-purple-800" />}
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ const RegisterPage = () => {
         </form>
       </CardContent>
       <CardFooter className="flex-col justify-evenly gap-2">
-        <Button variant="default" className="w-full">
+        <Button variant="default" className="w-full bg-[#440A73] hover:bg-[#221230]">
           Register
         </Button>
       </CardFooter>
