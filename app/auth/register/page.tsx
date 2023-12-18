@@ -105,14 +105,9 @@ const RegisterPage = () => {
     if(!isFormValid()){
       return
     }
-    const userData = {
-        name:name,
-        email:email,
-        password:password
-    }
-    console.log(userData)
+    
 
-    setIsRegistered(true)
+
   }
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
