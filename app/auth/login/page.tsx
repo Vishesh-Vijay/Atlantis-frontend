@@ -135,7 +135,7 @@ const LoginPage = () => {
         </Button>
         {/* Display errors in the Alert component */}
         {passwordError || emailError ? (
-          <Alert variant="destructive" className="mt-4">
+          <Alert variant="default" className="mt-4">
             <AlertTitle>Error</AlertTitle>
             {passwordError && (
               <AlertDescription>{passwordError}</AlertDescription>

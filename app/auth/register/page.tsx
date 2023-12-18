@@ -200,7 +200,7 @@ const RegisterPage = () => {
 
         {/* Display errors in the Alert component */}
         {passwordError || confirmPasswordError || emailError || nameError ? (
-          <Alert variant="destructive" className="mt-4">
+          <Alert variant="default" className="mt-4 text-red-500 font-semibold">
             <AlertTitle>Error</AlertTitle>
             {passwordError && (
               <AlertDescription>{passwordError}</AlertDescription>
@@ -213,7 +213,7 @@ const RegisterPage = () => {
           </Alert>
         ) : null}
         {isRegistered ? (
-            <Alert variant="default" className="mt-4">
+            <Alert variant="default" className="mt-4 text-green-500 font-semibold">
                 <AlertTitle>Success</AlertTitle>
                 <AlertDescription>Successfully registered</AlertDescription>
             </Alert>
