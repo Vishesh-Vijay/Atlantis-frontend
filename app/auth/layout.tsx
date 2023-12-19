@@ -11,12 +11,12 @@ const AuthLayout = ({children}:{children:React.ReactNode}) => {
         <h1 className='font-semibold text-4xl text-purple-100 text-center'>
           Watch Creativity Happen
         </h1>
-        <h2 className='my-4 text-xl text-purple-300 text-center'>Share your passion and find your inspiration</h2>
+        <h2 className='my-4 text-xl text-purple-300 text-center mb-4'>Share your passion and find your inspiration</h2>
         </div>
-        <div className='flex justify-center h-3/4 w-auto '>
+        <div className='flex justify-center h-3/4 w-auto mt-11'>
         <Image
           
-          src="/landing-removebg-preview.png"
+          src="/Illustration.png"
           alt="Twitch icon"
           width={450}
           height={450}
