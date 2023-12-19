@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
-import AuthNavbar from '@/components/auth/AuthNavbar';
+
 
 const AuthLayout = ({children}:{children:React.ReactNode}) => {
   return (

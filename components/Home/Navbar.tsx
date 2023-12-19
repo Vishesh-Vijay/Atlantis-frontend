@@ -15,7 +15,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-const AuthNavbar = () => {
+const Navbar = () => {
   return (
     <div className="flex justify-between items-center w-full">
       <div>LUMINAR</div>
@@ -68,4 +68,4 @@ const ListItem = React.forwardRef<
 
 ListItem.displayName = "ListItem";
 
-export default AuthNavbar;
+export default Navbar;

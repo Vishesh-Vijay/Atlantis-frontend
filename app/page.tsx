@@ -13,15 +13,17 @@ export default function Home() {
       router.push("/auth/login");
     }
   }, [token, router]);
-  console.log(token);
+
   const handleLogout = () => {
     console.log("logout");
     localStorage.removeItem("token");
     router.push("/auth/login");
   };
+
   return (
     <>
       {token ? (
+        <>
         <div>
           <p className="text-red-500 font-bold">Hello luminar frontend</p>
           <Button
@@ -30,6 +32,10 @@ export default function Home() {
             }
           >SIGNOUT</Button>
         </div>
+        <div>
+          
+        </div>
+        </>
       ) : null}
     </>
   );
