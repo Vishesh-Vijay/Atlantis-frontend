@@ -1,4 +1,5 @@
 'use client'
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -12,11 +13,23 @@ export default function Home() {
       router.push("/auth/login");
     }
   }, [token, router]);
-
+  console.log(token);
+  const handleLogout = () => {
+    console.log("logout");
+    localStorage.removeItem("token");
+    router.push("/auth/login");
+  };
   return (
     <>
       {token ? (
-        <p className="text-red-500 font-bold">Hello luminar frontend</p>
+        <div>
+          <p className="text-red-500 font-bold">Hello luminar frontend</p>
+          <Button
+            onClick={
+              handleLogout
+            }
+          >SIGNOUT</Button>
+        </div>
       ) : null}
     </>
   );

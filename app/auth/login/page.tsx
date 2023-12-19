@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,6 +17,10 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Import eye icons from react-icons
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { firebase, auth } from "@/utils/firebase"
+import { useRouter } from "next/navigation";
+
+
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +28,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
-
+  const [googleLoginError, setGoogleLoginError] = useState("");
     const handlePasswordChange = (value: string) => {
         setPassword(value);
         validatePassword(value);
@@ -70,6 +74,27 @@ const LoginPage = () => {
     }
     console.log(data)
   }
+    const router = useRouter()
+
+   const handleGoogleLogin = async () => {
+     const provider = new firebase.auth.GoogleAuthProvider();
+     try {
+       const result = await auth.signInWithPopup(provider);
+       const token = await auth?.currentUser?.getIdToken(true);
+       if (token) {
+         localStorage.setItem("token", token);
+         if (window.history.replaceState) {
+           window.history.replaceState({}, "", "/");
+         }
+         router.push("/");
+       }
+     } catch (error:any) {
+       console.error(error);
+       setGoogleLoginError(error.message);
+       
+     }
+   };
+
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
       <CardHeader>
@@ -130,18 +155,19 @@ const LoginPage = () => {
           Login
         </Button>
         <p className="font-medium text-[#440A73] hover:bg-[#221230]">OR</p>
-        <Button className="w-full bg-[#440A73]">
+        <Button className="w-full bg-[#440A73]" onClick={handleGoogleLogin}>
           <FcGoogle className="mr-2 h-4 w-4" /> Login with Google
         </Button>
         {/* Display errors in the Alert component */}
-        {passwordError || emailError ? (
-          <Alert variant="default" className="mt-4">
+        {passwordError || emailError || googleLoginError ? (
+          <Alert variant="default" className="mt-4 text-red-500 font-semibold">
             <AlertTitle>Error</AlertTitle>
             {passwordError && (
               <AlertDescription>{passwordError}</AlertDescription>
             )}
             
             {emailError && <AlertDescription>{emailError}</AlertDescription>}
+            {googleLoginError && <AlertDescription>{googleLoginError}</AlertDescription>}
           </Alert>
         ) : null}
       </CardFooter>
