@@ -49,6 +49,8 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [registerError, setRegisterError] = useState("");
+  const [showPopover, setShowPopover] = useState(false);
+
   const togglePasswordVisibility = ({ field }: { field: string }) => {
     if (field === "password") {
       setShowPassword(!showPassword);
@@ -71,6 +73,7 @@ const RegisterPage = () => {
       setNameError("Name can't be empty.");
     } else {
       setNameError("");
+      isFormValid();
     }
   };
 
@@ -89,6 +92,7 @@ const RegisterPage = () => {
       setUsernameError("Username can't contain special characters.");
     } else {
       setUsernameError("");
+      isFormValid();
     }
   };
   const handleConfirmPasswordChange = (value: string) => {
@@ -116,6 +120,7 @@ const RegisterPage = () => {
       );
     } else {
       setPasswordError("");
+      isFormValid();
     }
   };
 
@@ -135,6 +140,7 @@ const RegisterPage = () => {
       setEmailError("Invalid email address.");
     } else {
       setEmailError("");
+      isFormValid();
     }
   };
 
@@ -157,6 +163,8 @@ const RegisterPage = () => {
         setIsRegistered(true);
       setVerification(true);
       setRegisterError("");
+      setShowPopover(true);
+
       // router.push("/auth/login");
       }
       
@@ -285,14 +293,12 @@ const RegisterPage = () => {
           Register
         </Button>
         
-        
-        
-        {<Popover 
+        {showPopover && <Popover 
         title="Enter your verification code"
         description="We sent a code to your email. Please enter it below."
         handleSubmit={handleVerify}
         button1text="Verify"
-        trigger="Register"
+        trigger="Verify"
         />}
        
         {/* Display errors in the Alert component */}
