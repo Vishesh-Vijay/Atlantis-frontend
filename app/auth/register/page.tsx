@@ -33,7 +33,6 @@ import { any } from "prop-types";
 const RegisterPage = () => {
   const router = useRouter();
   const [verification, setVerification] = useState(false);
-  const [disableRegister, setDisableRegister] = useState(true);
   // State variables for password visibility, form fields, and error messages
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,7 +49,11 @@ const RegisterPage = () => {
   const [usernameError, setUsernameError] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [showPopover, setShowPopover] = useState(false);
-
+  const [isPasswordError, setIsPasswordError] = useState(true);
+  const [isConfirmPasswordError, setIsConfirmPasswordError] = useState(true);
+  const [isEmailError, setIsEmailError] = useState(true);
+  const [isNameError, setIsNameError] = useState(true);
+  const [isUsernameError, setIsUsernameError] = useState(true);
   const togglePasswordVisibility = ({ field }: { field: string }) => {
     if (field === "password") {
       setShowPassword(!showPassword);
@@ -71,9 +74,10 @@ const RegisterPage = () => {
   const validateName = (value: string) => {
     if (value.length < 1) {
       setNameError("Name can't be empty.");
+      setIsNameError(true);
     } else {
       setNameError("");
-      isFormValid();
+      setIsNameError(false);
     }
   };
 
@@ -81,18 +85,21 @@ const RegisterPage = () => {
     setUsername(value);
     validateUsername(value);
   };
-
+ 
   const validateUsername = (value: string) => {
     //username can't be empty,can't contain spaces,can't contain special characters
     if (value.length < 1) {
       setUsernameError("Username can't be empty.");
+      setIsUsernameError(true);
     } else if (value.match(/\s/)) {
       setUsernameError("Username can't contain spaces.");
+      setIsUsernameError(true);
     } else if (value.match(/[^a-zA-Z0-9]/)) {
       setUsernameError("Username can't contain special characters.");
+      setIsUsernameError(true);
     } else {
       setUsernameError("");
-      isFormValid();
+      setIsUsernameError(false);
     }
   };
   const handleConfirmPasswordChange = (value: string) => {
@@ -108,6 +115,7 @@ const RegisterPage = () => {
   const validatePassword = (value: string) => {
     if (value.length < 8) {
       setPasswordError("Password must be at least 8 characters long.");
+      setIsPasswordError(true);
     }
     // Password must contain at least one uppercase letter, one lowercase letter, and one number and one special character
     else if (
@@ -118,65 +126,70 @@ const RegisterPage = () => {
       setPasswordError(
         "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character."
       );
+      setIsPasswordError(true);
     } else {
       setPasswordError("");
-      isFormValid();
+      setIsPasswordError(false);
     }
   };
 
   const validateConfirmPassword = (value: string) => {
     if (value !== password) {
       setConfirmPasswordError("Passwords do not match.");
+      setIsConfirmPasswordError(true);
     } else {
       setConfirmPasswordError("");
-      isFormValid();
+      setIsConfirmPasswordError(false);
     }
-
   };
 
   const validateEmail = (value: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) {
       setEmailError("Invalid email address.");
+      setIsEmailError(true);
     } else {
       setEmailError("");
-      isFormValid();
+      setIsEmailError(false);
     }
   };
 
   const isFormValid = () => {
-    if(!passwordError && !confirmPasswordError && !emailError && !nameError && !usernameError)
-    {
-      setDisableRegister(false);
-    }
-    return !passwordError && !confirmPasswordError && !emailError && !nameError && !usernameError;
+    return (
+      !isPasswordError &&
+      !isConfirmPasswordError &&
+      !isEmailError &&
+      !isNameError &&
+      !isUsernameError
+    );
   };
 
   async function handleRegister(): Promise<void> {
-    console.log(isFormValid())
+    console.log(isFormValid());
     if (!isFormValid()) {
       return;
     }
     try {
-      const response: any = await RegisterUser({ name, email, password, username });
-      if(response){
-        setIsRegistered(true);
-      setVerification(true);
-      setRegisterError("");
-      setShowPopover(true);
+      const response: any = await RegisterUser({
+        name,
+        email,
+        password,
+        username,
+      });
+      if (response) {
+        // setIsRegistered(true);
+        setVerification(true);
+        setRegisterError("");
+        setShowPopover(true);
 
-      // router.push("/auth/login");
+        // router.push("/auth/login");
       }
-      
     } catch (error: any) {
       setRegisterError(error.message);
     }
   }
 
-  async function handleVerify(): Promise<void>{
-    
-  }
-
+  async function handleVerify(): Promise<void> {}
 
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
@@ -282,25 +295,25 @@ const RegisterPage = () => {
         </form>
       </CardContent>
       <CardFooter className="flex-col justify-evenly gap-2">
-        
+        <Dialog>
+          <DialogTrigger
+            className={isFormValid()?" bg-[#440A73] w-72 rounded-lg h-10 text-white":" bg-[#440A73] w-72 rounded-lg h-10 opacity-50 cursor-not-allowed text-black"}
+            onClick={handleRegister}
+            disabled={!isFormValid()}
+          >
+            {/* <Button variant="ghost"></Button> */}
+            Register
+          </DialogTrigger>
+          {showPopover && (
+            <Popover
+              title="Enter your verification code"
+              description="We sent a code to your email. Please enter it below."
+              handleSubmit={handleVerify}
+              button1text="Verify"
+            />
+          )}
+        </Dialog>
 
-      <Button
-          variant="default"
-          className="w-full bg-[#440A73] hover:bg-[#221230]"
-          disabled={disableRegister}
-          onClick={handleRegister}
-        >
-          Register
-        </Button>
-        
-        {showPopover && <Popover 
-        title="Enter your verification code"
-        description="We sent a code to your email. Please enter it below."
-        handleSubmit={handleVerify}
-        button1text="Verify"
-        trigger="Verify"
-        />}
-       
         {/* Display errors in the Alert component */}
         {passwordError ||
         confirmPasswordError ||
