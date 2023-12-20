@@ -18,6 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import RegisterUser from "@/utils/api";
 import { useRouter } from "next/navigation";
 // import { Button } from "@/components/ui/button"
+import Popover from "@/components/Popover";
 import {
   Dialog,
   DialogContent,
@@ -27,9 +28,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { any } from "prop-types";
 
 const RegisterPage = () => {
   const router = useRouter();
+  const [verification, setVerification] = useState(false);
+  const [disableRegister, setDisableRegister] = useState(true);
   // State variables for password visibility, form fields, and error messages
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -120,7 +124,9 @@ const RegisterPage = () => {
       setConfirmPasswordError("Passwords do not match.");
     } else {
       setConfirmPasswordError("");
+      isFormValid();
     }
+
   };
 
   const validateEmail = (value: string) => {
@@ -133,18 +139,27 @@ const RegisterPage = () => {
   };
 
   const isFormValid = () => {
-    return !passwordError && !confirmPasswordError && !emailError && !nameError;
+    if(!passwordError && !confirmPasswordError && !emailError && !nameError && !usernameError)
+    {
+      setDisableRegister(false);
+    }
+    return !passwordError && !confirmPasswordError && !emailError && !nameError && !usernameError;
   };
 
   async function handleRegister(): Promise<void> {
+    console.log(isFormValid())
     if (!isFormValid()) {
       return;
     }
     try {
-      const response = await RegisterUser({ name, email, password, username });
-      setIsRegistered(true);
+      const response: any = await RegisterUser({ name, email, password, username });
+      if(response){
+        setIsRegistered(true);
+      setVerification(true);
       setRegisterError("");
-      router.push("/auth/login");
+      // router.push("/auth/login");
+      }
+      
     } catch (error: any) {
       setRegisterError(error.message);
     }
@@ -261,41 +276,25 @@ const RegisterPage = () => {
       <CardFooter className="flex-col justify-evenly gap-2">
         
 
-
-
-
-        <Dialog>
-          <DialogTrigger asChild>
-          <Button
+      <Button
           variant="default"
           className="w-full bg-[#440A73] hover:bg-[#221230]"
-          disabled={!isFormValid()}
-          // onClick={handleRegister}
+          disabled={disableRegister}
+          onClick={handleRegister}
         >
           Register
         </Button>
-
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle className="text-purple-900">Enter your verification code</DialogTitle>
-              <DialogDescription className="py-1 text-gray-500">
-                We sent a code to your email. Please enter it below.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-2">
-              <div className="grid grid-cols-4 items-center gap-4">
-              
-                <Input id="code" className="col-span-4 border-purple-900" />
-              </div>
-            </div>
-            <DialogFooter className="">
-              <Button type="submit" className="bg-purple-900">Resend Code</Button>
-              <Button type="submit" className="bg-purple-900" onClick={handleVerify}>Verify</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
+        
+        
+        
+        {<Popover 
+        title="Enter your verification code"
+        description="We sent a code to your email. Please enter it below."
+        handleSubmit={handleVerify}
+        button1text="Verify"
+        trigger="Register"
+        />}
+       
         {/* Display errors in the Alert component */}
         {passwordError ||
         confirmPasswordError ||
