@@ -13,9 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+
 const RegisterPopover = () => {
   const [data, setData] = React.useState("");
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+  
+  };
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>

@@ -117,7 +117,6 @@ const LoginPage = () => {
     }
   };
 
-
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
       <CardHeader>
@@ -155,12 +154,12 @@ const LoginPage = () => {
                 </Label>
 
                 <Dialog>
-                  <DialogTrigger>
+                  <DialogTrigger onClick={()=>setPasswordReset(false)}>
                     {/* <Button variant="ghost"></Button> */}
                     <p className=" text-xs italic">Forgot Password?</p>
                   </DialogTrigger>
                   {!passwordReset ? (
-                    <ForgotPasswordPopover />
+                    <ForgotPasswordPopover setPasswordReset={setPasswordReset} />
                   
                   ) : (
                     <ResetPasswordPopover  />
