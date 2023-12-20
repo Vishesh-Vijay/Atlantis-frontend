@@ -27,7 +27,7 @@ export default async function RegisterUser({name,email,password,username}:Regist
 
 export async function LoginUser({email,password}:LoginUserParams): Promise<void> {
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/login", {
+        const response = await axios.post("http://localhost:5000/user/login", {
             email,
             password,
         });

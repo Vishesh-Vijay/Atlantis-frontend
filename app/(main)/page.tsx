@@ -5,24 +5,26 @@ import { useEffect } from "react";
 
 export default function Home() {
   const token = localStorage.getItem("token");
+  const googleToken = localStorage.getItem("googleToken");
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
-   
+    if (!token && !googleToken) {
       router.push("/auth/login");
     }
-  }, [token, router]);
+    console.log(token, googleToken);
+  }, [token ,googleToken, router]);
 
   const handleLogout = () => {
     console.log("logout");
-    localStorage.removeItem("token");
+    if(localStorage.getItem("token"))localStorage.removeItem("token");
+    if(localStorage.getItem("googleToken"))localStorage.removeItem("googleToken");
     router.push("/auth/login");
   };
 
   return (
     <>
-      {token ? (
+      {token||googleToken ? (
         <>
         <div>
           <p className="text-red-500 font-bold">Hello luminar frontend</p>

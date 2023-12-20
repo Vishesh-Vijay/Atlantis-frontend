@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import * as React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,10 +17,9 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Import eye icons from react-icons
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { firebase, auth } from "@/utils/firebase"
+import { firebase, auth } from "@/utils/firebase";
 import { useRouter } from "next/navigation";
-
-
+import { LoginUser } from "@/utils/api";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,76 +28,91 @@ const LoginPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [googleLoginError, setGoogleLoginError] = useState("");
-    const handlePasswordChange = (value: string) => {
-        setPassword(value);
-        validatePassword(value);
-    };
-    const handleEmailChange = (value: string) => {
-        setEmail(value);
-        validateEmail(value);
-    }
+  const [loginError, setLoginError] = useState("");
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    validatePassword(value);
+  };
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    validateEmail(value);
+  };
 
-    const validateEmail = (value: string) => {
-         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-         if (!emailRegex.test(value)) {
-           setEmailError("Invalid email address.");
-         } else {
-           setEmailError("");
-         }
+  const validateEmail = (value: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      setEmailError("Invalid email address.");
+    } else {
+      setEmailError("");
     }
-    const validatePassword = (value: string) => {
-        if (value.length < 8) {
-        setPasswordError("Password can't be of less than 8 characters.");
-        }
-      
-        else if (!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)) {
-        setPasswordError("Not a valid password because it does not contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
-        }
-        else {
-        setPasswordError("");
-        }
-    } 
+  };
+  const validatePassword = (value: string) => {
+    if (value.length < 8) {
+      setPasswordError("Password can't be of less than 8 characters.");
+    } else if (
+      !value.match(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+      )
+    ) {
+      setPasswordError(
+        "Not a valid password because it does not contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
+    } else {
+      setPasswordError("");
+    }
+  };
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const isFormValid = () => {
     return !passwordError && !emailError;
-  }
-  const handleLogin = ()=>{
-    if(!isFormValid()){
-      return
+  };
+  const handleLogin = async () => {
+    if (!isFormValid()) {
+      return;
     }
-    const data = {
-      email,
-      password
+    try {
+      const response: any = await LoginUser({ email, password });
+      console.log(response);
+      if (response) {
+        setLoginError("");
+        localStorage.setItem("token", response.token);
+        if (window.history.replaceState) {
+          window.history.replaceState({}, "", "/");
+        }
+        router.push("/");
+      }
+    } catch (error: any) {
+      setLoginError(error.message);
     }
-    console.log(data)
-  }
-    const router = useRouter()
+  };
+  const router = useRouter();
 
-   const handleGoogleLogin = async () => {
-     const provider = new firebase.auth.GoogleAuthProvider();
-     try {
-       const result = await auth.signInWithPopup(provider);
-       const token = await auth?.currentUser?.getIdToken(true);
-       if (token) {
-         localStorage.setItem("token", token);
-         if (window.history.replaceState) {
-           window.history.replaceState({}, "", "/");
-         }
-         router.push("/");
-       }
-     } catch (error:any) {
-       console.error(error);
-       setGoogleLoginError(error.message);
-       
-     }
-   };
+  const handleGoogleLogin = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      const result = await auth.signInWithPopup(provider);
+      const token = await auth?.currentUser?.getIdToken(true);
+      if (token) {
+        localStorage.setItem("googleToken", token);
+
+        if (window.history.replaceState) {
+          window.history.replaceState({}, "", "/");
+        }
+        router.push("/");
+      }
+    } catch (error: any) {
+      console.error(error);
+      setGoogleLoginError(error.message);
+    }
+  };
 
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
       <CardHeader>
-        <CardTitle className="text-purple-100 py-1">Login to your account</CardTitle>
+        <CardTitle className="text-purple-100 py-1">
+          Login to your account
+        </CardTitle>
         <CardDescription className="text-xs text-purple-300">
           Account doesn&apos;t exist?
           <Link href="/auth/register" className=" text-purple-100 font-bold">
@@ -111,11 +125,11 @@ const LoginPage = () => {
         <form>
           <div className="grid w-full items-center gap-4 text-purple-100">
             <div className="flex flex-col space-y-1.5">
-              <Label className="py-1" htmlFor="email">Email</Label>
+              <Label className="py-1" htmlFor="email">
+                Email
+              </Label>
               <Input
-            
                 className="bg-[#e8d5f8] border-transparent text-purple-900"
-    
                 name="email"
                 id="email"
                 type="email"
@@ -124,7 +138,9 @@ const LoginPage = () => {
               />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password" className="py-1">Password</Label>
+              <Label htmlFor="password" className="py-1">
+                Password
+              </Label>
               <div className="relative">
                 <Input
                   className="bg-[#e8d5f8] border-transparent text-purple-900"
@@ -138,7 +154,11 @@ const LoginPage = () => {
                   className=" absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
-                  {showPassword ? <HiEye className="text-purple-800" /> : <HiEyeOff className="text-purple-800"/>}
+                  {showPassword ? (
+                    <HiEye className="text-purple-800" />
+                  ) : (
+                    <HiEyeOff className="text-purple-800" />
+                  )}
                 </div>
               </div>
             </div>
@@ -165,9 +185,11 @@ const LoginPage = () => {
             {passwordError && (
               <AlertDescription>{passwordError}</AlertDescription>
             )}
-            
+
             {emailError && <AlertDescription>{emailError}</AlertDescription>}
-            {googleLoginError && <AlertDescription>{googleLoginError}</AlertDescription>}
+            {googleLoginError && (
+              <AlertDescription>{googleLoginError}</AlertDescription>
+            )}
           </Alert>
         ) : null}
       </CardFooter>
