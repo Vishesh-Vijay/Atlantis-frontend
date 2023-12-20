@@ -138,9 +138,6 @@ const RegisterPage = () => {
     } catch (error:any) {
       setRegisterError(error.message);
     }
-    
-    
-
   }
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
@@ -256,7 +253,7 @@ const RegisterPage = () => {
         </Button>
 
         {/* Display errors in the Alert component */}
-        {passwordError || confirmPasswordError || emailError || nameError || usernameError ? (
+        {passwordError || confirmPasswordError || emailError || nameError || usernameError || registerError ? (
           <Alert variant="default" className="mt-4 text-red-500 font-semibold">
             <AlertTitle>Error</AlertTitle>
             {passwordError && (
@@ -268,6 +265,7 @@ const RegisterPage = () => {
             {emailError && <AlertDescription>{emailError}</AlertDescription>}
             {nameError && <AlertDescription>{nameError}</AlertDescription>}
             {usernameError && <AlertDescription>{usernameError}</AlertDescription>}
+            {registerError && <AlertDescription>{registerError}</AlertDescription>}
           </Alert>
         ) : null}
         {isRegistered ? (
