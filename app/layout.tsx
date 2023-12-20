@@ -25,15 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.variable}>
-        <div className='w-full h-[100vh] flex flex-col justify-between items-center'>
-          <div className='w-full'>
-            <Navbar />
-          </div>
-          <div className='w-full h-full flex justify-between items-center'>
-            <div className='w-1/4'><Dashboard /></div>
-            <div className='w-3/4'>{children}</div>
-          </div>
-        </div>
+        {children} 
       </body>
     </html>
   );
