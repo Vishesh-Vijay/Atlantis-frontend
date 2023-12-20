@@ -27,7 +27,7 @@ export default function Home() {
       {token||googleToken ? (
         <>
         <div>
-          <p className="text-red-500 font-bold">Hello luminar frontend</p>
+          <p className="text-red-500 font-bold">Hello atlantis frontend</p>
           <Button
             onClick={
               handleLogout

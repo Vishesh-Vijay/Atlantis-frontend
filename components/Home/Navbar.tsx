@@ -18,7 +18,7 @@ import {
 const Navbar = () => {
   return (
     <div className="flex justify-between items-center w-full">
-      <div>LUMINAR</div>
+      <div>Atlantis</div>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem className="mx-3">
