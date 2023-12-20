@@ -37,4 +37,13 @@ export async function LoginUser({email,password}:LoginUserParams): Promise<void>
     }
 }
 
-
+export async function ForgotPassword(email:string): Promise<void> {
+    try {
+        const response = await axios.post("http://localhost:5000/user/forgotpassword", {
+            email,
+        });
+        return response.data;
+    } catch (error: any) {
+        return error.message;
+    }
+}

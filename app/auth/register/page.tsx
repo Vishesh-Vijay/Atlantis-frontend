@@ -18,7 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import RegisterUser from "@/utils/api";
 import { useRouter } from "next/navigation";
 // import { Button } from "@/components/ui/button"
-import Popover from "@/components/Popover";
+import RegisterPopover from "@/components/auth/RegisterPopover";
 import {
   Dialog,
   DialogContent,
@@ -85,7 +85,7 @@ const RegisterPage = () => {
     setUsername(value);
     validateUsername(value);
   };
- 
+
   const validateUsername = (value: string) => {
     //username can't be empty,can't contain spaces,can't contain special characters
     if (value.length < 1) {
@@ -189,7 +189,6 @@ const RegisterPage = () => {
     }
   }
 
-  async function handleVerify(): Promise<void> {}
 
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
@@ -297,21 +296,19 @@ const RegisterPage = () => {
       <CardFooter className="flex-col justify-evenly gap-2">
         <Dialog>
           <DialogTrigger
-            className={isFormValid()?" bg-[#440A73] w-72 rounded-lg h-10 text-white":" bg-[#440A73] w-72 rounded-lg h-10 opacity-50 cursor-not-allowed text-black"}
+            className={
+              isFormValid()
+                ? " bg-[#440A73] w-72 rounded-lg h-10 text-white"
+                : " bg-[#440A73] w-72 rounded-lg h-10 opacity-50 cursor-not-allowed text-black"
+            }
             onClick={handleRegister}
             disabled={!isFormValid()}
           >
             {/* <Button variant="ghost"></Button> */}
             Register
           </DialogTrigger>
-          {showPopover && (
-            <Popover
-              title="Enter your verification code"
-              description="We sent a code to your email. Please enter it below."
-              handleSubmit={handleVerify}
-              button1text="Verify"
-            />
-          )}
+          
+            <RegisterPopover />
         </Dialog>
 
         {/* Display errors in the Alert component */}

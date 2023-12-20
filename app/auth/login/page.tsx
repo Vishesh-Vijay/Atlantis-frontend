@@ -20,7 +20,9 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { firebase, auth } from "@/utils/firebase";
 import { useRouter } from "next/navigation";
 import { LoginUser } from "@/utils/api";
-
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ForgotPasswordPopover from "@/components/auth/ForgotPasswordPopover"; 
+import ResetPasswordPopover from "@/components/auth/ResetPasswordPopover";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -29,6 +31,9 @@ const LoginPage = () => {
   const [emailError, setEmailError] = useState("");
   const [googleLoginError, setGoogleLoginError] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [isPasswordError, setIsPasswordError] = useState(true);
+  const [isEmailError, setIsEmailError] = useState(true);
+  const [passwordReset, setPasswordReset] = useState(false);
   const handlePasswordChange = (value: string) => {
     setPassword(value);
     validatePassword(value);
@@ -42,13 +47,16 @@ const LoginPage = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) {
       setEmailError("Invalid email address.");
+      setIsEmailError(true);
     } else {
       setEmailError("");
+      setIsEmailError(false);
     }
   };
   const validatePassword = (value: string) => {
     if (value.length < 8) {
       setPasswordError("Password can't be of less than 8 characters.");
+      setIsPasswordError(true);
     } else if (
       !value.match(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
@@ -57,15 +65,17 @@ const LoginPage = () => {
       setPasswordError(
         "Not a valid password because it does not contain at least one uppercase letter, one lowercase letter, one number, and one special character."
       );
+      setIsPasswordError(true);
     } else {
       setPasswordError("");
+      setIsPasswordError(false);
     }
   };
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const isFormValid = () => {
-    return !passwordError && !emailError;
+    return !isPasswordError && !isEmailError;
   };
   const handleLogin = async () => {
     if (!isFormValid()) {
@@ -107,6 +117,7 @@ const LoginPage = () => {
     }
   };
 
+
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
       <CardHeader>
@@ -125,7 +136,7 @@ const LoginPage = () => {
         <form>
           <div className="grid w-full items-center gap-4 text-purple-100">
             <div className="flex flex-col space-y-1.5">
-              <Label className="py-1" htmlFor="email">
+              <Label className="py-1 font-bold" htmlFor="email">
                 Email
               </Label>
               <Input
@@ -138,9 +149,24 @@ const LoginPage = () => {
               />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password" className="py-1">
-                Password
-              </Label>
+              <div className="w-full flex justify-between items-center">
+                <Label htmlFor="password" className="py-1 font-bold">
+                  Password
+                </Label>
+
+                <Dialog>
+                  <DialogTrigger>
+                    {/* <Button variant="ghost"></Button> */}
+                    <p className=" text-xs italic">Forgot Password?</p>
+                  </DialogTrigger>
+                  {!passwordReset ? (
+                    <ForgotPasswordPopover />
+                  
+                  ) : (
+                    <ResetPasswordPopover  />
+                  )}
+                </Dialog>
+              </div>
               <div className="relative">
                 <Input
                   className="bg-[#e8d5f8] border-transparent text-purple-900"
