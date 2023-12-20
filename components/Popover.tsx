@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,21 +19,15 @@ interface PopoverProps {
   tempSubmit?: () => void;
   button1text: string;
   button2text?: string;
-  trigger: string;
+
 }
 const Popover = ({
   title,
   description,
   handleSubmit,
   button1text,
-  trigger,
 }: PopoverProps) => {
-  return (
-    <div>
-      <Dialog>
-        <DialogTrigger>
-          <Button className="bg-purple-900">{trigger}</Button>
-        </DialogTrigger>
+  return ( 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-purple-900">{title}</DialogTitle>
@@ -56,8 +51,6 @@ const Popover = ({
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
-    </div>
   );
 };
 
