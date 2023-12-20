@@ -1,5 +1,7 @@
+'use client'
 import Navbar from "@/components/Home/Navbar";
 import Sidebar from "@/components/Home/Sidebar";
+import { NextUIProvider } from "@nextui-org/react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +14,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="w-full">
           <Navbar />
         </div>
-        <div className="w-full h-full">{children}</div>
+        <NextUIProvider>
+          <div className="w-full h-full">{children}</div>
+        </NextUIProvider>
       </div>
     </div>
   );
