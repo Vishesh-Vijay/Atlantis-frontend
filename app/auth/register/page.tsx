@@ -15,9 +15,11 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
+import RegisterUser from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
+  const router = useRouter()
   // State variables for password visibility, form fields, and error messages
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -30,6 +32,9 @@ const RegisterPage = () => {
   const [emailError, setEmailError] = useState("");
   const [nameError,setNameError] = useState("");
   const [isRegistered,setIsRegistered] = useState(false)
+  const [username,setUsername] = useState("")
+  const [usernameError,setUsernameError] = useState("")
+  const [registerError,setRegisterError] = useState("")
   const togglePasswordVisibility = ({ field }: { field: string }) => {
     if (field === "password") {
       setShowPassword(!showPassword);
@@ -56,6 +61,26 @@ const RegisterPage = () => {
     }
   }
 
+  const handleUsernameChange = (value: string) => {
+    setUsername(value)
+    validateUsername(value)
+  }
+
+  const validateUsername = (value:string) => {
+    //username can't be empty,can't contain spaces,can't contain special characters
+    if(value.length < 1){
+      setUsernameError("Username can't be empty.")
+    }
+    else if(value.match(/\s/)){
+      setUsernameError("Username can't contain spaces.")
+    }
+    else if(value.match(/[^a-zA-Z0-9]/)){
+      setUsernameError("Username can't contain special characters.")
+    }
+    else{
+      setUsernameError("")
+    }
+  }
   const handleConfirmPasswordChange = (value: string) => {
     setConfirmPassword(value);
     validateConfirmPassword(value);
@@ -101,21 +126,31 @@ const RegisterPage = () => {
   };
 
 
-  const handleRegister = ()=>{
+  async function handleRegister():Promise<void>{
     if(!isFormValid()){
       return
     }
+    try {
+      const response = await RegisterUser({ name, email, password, username });
+      setIsRegistered(true)
+      setRegisterError("")
+      router.push("/auth/login")
+    } catch (error:any) {
+      setRegisterError(error.message);
+    }
     
-
+    
 
   }
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
       <CardHeader>
-        <CardTitle className="text-purple-100 py-1">Create your account</CardTitle>
+        <CardTitle className="text-purple-100 py-1">
+          Create your account
+        </CardTitle>
         <CardDescription className="text-xs text-purple-300">
           Already have an account?
-          <Link href="/auth/login"className=" text-purple-100 font-medium">
+          <Link href="/auth/login" className=" text-purple-100 font-medium">
             {" "}
             Login here
           </Link>
@@ -126,19 +161,30 @@ const RegisterPage = () => {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="name">Name</Label>
-              <Input 
-              className="text-purple-900"
-                name="name" 
-                id="name" 
-                type="text" 
-                placeholder="John Doe" 
-                onChange={(e) => handleNameChange(e.target.value) } 
+              <Input
+                className="text-purple-900"
+                name="name"
+                id="name"
+                type="text"
+                placeholder="John Doe"
+                onChange={(e) => handleNameChange(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1.5 text-purple-100">
+              <Label htmlFor="name">Username</Label>
+              <Input
+                className="text-purple-900"
+                name="username"
+                id="username"
+                type="text"
+                placeholder="trainwreck"
+                onChange={(e) => handleUsernameChange(e.target.value)}
               />
             </div>
             <div className="flex flex-col space-y-1.5 text-purple-100">
               <Label htmlFor="email">Email</Label>
               <Input
-              className="text-purple-900"
+                className="text-purple-900"
                 name="email"
                 id="email"
                 type="email"
@@ -150,7 +196,7 @@ const RegisterPage = () => {
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
-                className="text-purple-900"
+                  className="text-purple-900"
                   name="password"
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -163,7 +209,11 @@ const RegisterPage = () => {
                     togglePasswordVisibility({ field: "password" })
                   }
                 >
-                  {showPassword ? <HiEye className="text-purple-800" /> : <HiEyeOff className="text-purple-800" />}
+                  {showPassword ? (
+                    <HiEye className="text-purple-800" />
+                  ) : (
+                    <HiEyeOff className="text-purple-800" />
+                  )}
                 </div>
               </div>
             </div>
@@ -171,7 +221,7 @@ const RegisterPage = () => {
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
                 <Input
-                className="text-purple-900"
+                  className="text-purple-900"
                   name="confirmPassword"
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
@@ -184,21 +234,29 @@ const RegisterPage = () => {
                     togglePasswordVisibility({ field: "confirmPassword" })
                   }
                 >
-                  {showConfirmPassword ? <HiEye className="text-purple-800" /> : <HiEyeOff className="text-purple-800" />}
+                  {showConfirmPassword ? (
+                    <HiEye className="text-purple-800" />
+                  ) : (
+                    <HiEyeOff className="text-purple-800" />
+                  )}
                 </div>
               </div>
-             
             </div>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex-col justify-evenly gap-2">
-        <Button variant="default" className="w-full bg-[#440A73] hover:bg-[#221230]" disabled={!isFormValid()} onClick={handleRegister}>
+        <Button
+          variant="default"
+          className="w-full bg-[#440A73] hover:bg-[#221230]"
+          disabled={!isFormValid()}
+          onClick={handleRegister}
+        >
           Register
         </Button>
 
         {/* Display errors in the Alert component */}
-        {passwordError || confirmPasswordError || emailError || nameError ? (
+        {passwordError || confirmPasswordError || emailError || nameError || usernameError ? (
           <Alert variant="default" className="mt-4 text-red-500 font-semibold">
             <AlertTitle>Error</AlertTitle>
             {passwordError && (
@@ -209,15 +267,18 @@ const RegisterPage = () => {
             )}
             {emailError && <AlertDescription>{emailError}</AlertDescription>}
             {nameError && <AlertDescription>{nameError}</AlertDescription>}
+            {usernameError && <AlertDescription>{usernameError}</AlertDescription>}
           </Alert>
         ) : null}
         {isRegistered ? (
-            <Alert variant="default" className="mt-4 text-green-500 font-semibold">
-                <AlertTitle>Success</AlertTitle>
-                <AlertDescription>Successfully registered</AlertDescription>
-            </Alert>
-            ) : null
-        }
+          <Alert
+            variant="default"
+            className="mt-4 text-green-500 font-semibold"
+          >
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>Successfully registered</AlertDescription>
+          </Alert>
+        ) : null}
       </CardFooter>
     </Card>
   );

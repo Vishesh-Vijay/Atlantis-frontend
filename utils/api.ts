@@ -1,25 +1,27 @@
 import axios from "axios";
 
 interface RegisterUserParams {
-    name: string;
-    email: string;
-    password: string;
+  name: string;
+  email: string;
+  password: string;
+  username: string;
 }
 
 interface LoginUserParams {
-    email: string;
+    email: string; 
     password: string;
 }
-export default async function RegisterUser({name,email,password}:RegisterUserParams): Promise<void> {
+export default async function RegisterUser({name,email,password,username}:RegisterUserParams): Promise<void> {
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/register", {
+        const response = await axios.post("http://localhost:5000/user/register", {
             name,
+            username,
             email,
             password,
         });
         return response.data;
     } catch (error: any) {
-        return error.response.data;
+        return error.message;
     }
 }
 
@@ -31,6 +33,6 @@ export async function LoginUser({email,password}:LoginUserParams): Promise<void>
         });
         return response.data;
     } catch (error: any) {
-        return error.response.data;
+        return error.message;
     }
 }
