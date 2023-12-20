@@ -1,5 +1,5 @@
 'use client'
-import Navbar from "@/components/Home/Navbar";
+import Navbar from "@/components/Home/CustomNavbar";
 import Sidebar from "@/components/Home/Sidebar";
 import { NextUIProvider } from "@nextui-org/react";
 
