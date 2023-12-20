@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
+import CarousalMain from "@/components/Home/CarousalMain";
 export default function Home() {
   const token = localStorage.getItem("token");
   const googleToken = localStorage.getItem("googleToken");
@@ -26,13 +26,14 @@ export default function Home() {
     <>
       {token||googleToken ? (
         <>
-        <div>
-          <p className="text-red-500 font-bold">Hello atlantis frontend</p>
+        <div className=""> 
           <Button
             onClick={
               handleLogout
             }
           >SIGNOUT</Button>
+          <CarousalMain />
+          
         </div>
         <div>
           

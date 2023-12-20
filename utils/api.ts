@@ -36,3 +36,5 @@ export async function LoginUser({email,password}:LoginUserParams): Promise<void>
         return error.message;
     }
 }
+
+
