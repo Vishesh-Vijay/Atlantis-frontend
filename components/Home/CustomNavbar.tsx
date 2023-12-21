@@ -7,6 +7,7 @@ import { SearchIcon , Mic, BellRing, Airplay} from "lucide-react";
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { CgProfile } from "react-icons/cg";
 
 import {
   NavigationMenu,
@@ -17,8 +18,18 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {useRouter} from "next/navigation"
+import { IoLogOutOutline } from "react-icons/io5";
 
 const CustomNavbar = () => {
+  const router = useRouter();
+  const handleLogout = () => {
+    console.log("logout");
+    if (localStorage.getItem("token")) localStorage.removeItem("token");
+    if (localStorage.getItem("googleToken"))
+      localStorage.removeItem("googleToken");
+    router.push("/auth/login");
+  };
   return (
     <Navbar className="mt-4">
       <div className="flex justify-center">
@@ -38,22 +49,27 @@ const CustomNavbar = () => {
             <Mic size={18} className="text-gray-600" />
           </span>
         </div>
-       
-        
       </div>
 
-      <NavbarContent as="div" className="flex space-x-3 items-center " justify="end">
-      <div>
-        <NavbarContent className="hidden sm:flex gap-3">
-          <span className=" pl-3 flex items-center pointer-events-none">
-            <Airplay size={18} className="text-gray-600" />
-          </span>
-          <span className=" pl-3 flex items-center pointer-events-none">
-            <BellRing size={18} className="text-gray-600" />
-          </span>
-        </NavbarContent>
+      <NavbarContent
+        as="div"
+        className="flex space-x-3 items-center "
+        justify="end"
+      >
+        <div>
+          <NavbarContent className="hidden sm:flex gap-3">
+            <span className=" pl-3 flex items-center pointer-events-none">
+              <Airplay size={18} className="text-gray-600" />
+            </span>
+            <span className=" pl-3 flex items-center pointer-events-none">
+              <BellRing size={18} className="text-gray-600" />
+            </span>
+          </NavbarContent>
         </div>
-        <Dropdown placement="bottom-end" className="border border-gray-200 bg-gray-300 rounded-2xl">
+        <Dropdown
+          placement="bottom-end"
+          className="border border-gray-200 bg-gray-300 rounded-2xl"
+        >
           <DropdownTrigger>
             <Avatar
               isBordered
@@ -65,14 +81,27 @@ const CustomNavbar = () => {
               src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
+          <DropdownMenu aria-label="Profile Actions" variant="faded">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">zoey@example.com</p>
             </DropdownItem>
-            <DropdownItem key="settings">Settings</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
+            <DropdownItem key="settings" className="bg-white rounded-lg">
+              <span className=" text-center flex items-center justify-center">
+                <CgProfile className="inline-block mr-1" />
+                Profile
+              </span>
+            </DropdownItem>
+            <DropdownItem
+              key="logout"
+              color="danger"
+              onClick={handleLogout}
+              className="bg-white rounded-lg text-center mt-1"
+            >
+              <span className="text-center flex items-center justify-center">
+                <IoLogOutOutline className="inline-block mr-1" />
+                Logout
+              </span>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

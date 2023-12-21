@@ -165,7 +165,7 @@ const RegisterPage = () => {
   };
 
   async function handleRegister(): Promise<void> {
-    console.log(isFormValid());
+    
     if (!isFormValid()) {
       return;
     }
