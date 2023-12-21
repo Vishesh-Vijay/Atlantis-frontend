@@ -10,7 +10,7 @@ interface CarousalCardProps {
 
 const CarousalCard = ({ title, author, viewers, image }: CarousalCardProps) => {
   return (
-    <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
+    <Card shadow="sm" isPressable  onPress={() => console.log("item pressed")}>
       <Image
         shadow="sm"
         radius="lg"

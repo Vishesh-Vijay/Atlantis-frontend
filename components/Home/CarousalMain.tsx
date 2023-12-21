@@ -9,6 +9,7 @@ viewers:number
 timeAgo:number
 description:string
 tags: string[]
+backgroundImage: string;
 }
 
 const formatViewers = (viewers: number): string => {
@@ -19,11 +20,11 @@ const formatViewers = (viewers: number): string => {
     return `${viewers} viewers`;
   }
 };
-const CarousalMain = ({username, typeOfStream, viewers, timeAgo, description, tags}:CarousalMainProps) => {
+const CarousalMain = ({username, typeOfStream, viewers, timeAgo, description, tags, backgroundImage}:CarousalMainProps) => {
   return (
-    <div className='bg-gray-200 mx-12 my-4 rounded-2xl flex'>
+    <div className=' mx-12 my-4 rounded-2xl flex'  style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       
-      <div className="bg-gray-800 px-8 py-5 pb-2 w-1/2 rounded-tl-2xl rounded-bl-2xl">
+      <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm px-8 py-5 pb-2 w-1/2 rounded-tl-2xl rounded-bl-2xl">
         <div className="flex space-x-4  items-center">
           <div className="flex bg-red-500 text-white text-xs justify-center items-center pl-2 -pr-2 rounded-sm">
             <p>LIVE</p>
