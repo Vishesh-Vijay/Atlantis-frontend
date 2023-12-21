@@ -12,12 +12,37 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
+import { Verify } from "@/utils/api";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+interface RegisterPopoverProps {
+  email_id: string; 
+}
+const RegisterPopover = ({email_id}:RegisterPopoverProps) => {
+  const [verifyError, setVerifyError] = React.useState("");
+  const [code, setCode] = React.useState("");
+  const router = useRouter();
+  
+  const handleSubmit = async () => {
+    try {
+      const response: any = await Verify({email_id,code});
+      
+      if (response) {
+        console.log("User verified")
+        // router.push('/auth/login')
+        setVerifyError("");
+        
+      } 
+    } catch (error:any) {
+      console.log(error);
+      setVerifyError(error.message);
+    }
+  };
+  
+const handleCodeChange = (value: string) => {
+  setCode(value);
+}
 
-const RegisterPopover = () => {
-  const [data, setData] = React.useState("");
-  const handleSubmit = () => {
-
-  }
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -35,7 +60,7 @@ const RegisterPopover = () => {
             name="code"
             type="text"
             className="col-span-4 border-purple-900"
-            onChange={(e) => setData(e.target.value)}
+            onChange={(e) => handleCodeChange(e.target.value)}
           />
         </div>
       </div>
@@ -45,6 +70,14 @@ const RegisterPopover = () => {
           Verify
         </Button>
       </DialogFooter>
+      { verifyError  ? (
+        <Alert variant="default" className="mt-4 text-red-500 font-semibold">
+          <AlertTitle>Error</AlertTitle>
+          
+          {verifyError && <AlertDescription>{verifyError}</AlertDescription>}
+          
+        </Alert>
+      ) : null}
     </DialogContent>
   );
 };

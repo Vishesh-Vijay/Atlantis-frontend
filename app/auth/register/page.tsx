@@ -181,6 +181,8 @@ const RegisterPage = () => {
         setVerification(true);
         setRegisterError("");
         setShowPopover(true);
+        console.log(response);
+
         // router.push("/auth/login");
       }
     } catch (error: any) {
@@ -188,6 +190,7 @@ const RegisterPage = () => {
     }
   }
 
+  // console.log(email);
 
   return (
     <Card className="w-[350px] bg-transparent border-transparent shadow-none">
@@ -307,7 +310,9 @@ const RegisterPage = () => {
             Register
           </DialogTrigger>
           
-            <RegisterPopover />
+            <RegisterPopover 
+            email_id={email}
+            />
         </Dialog>
 
         {/* Display errors in the Alert component */}
