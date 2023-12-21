@@ -15,6 +15,10 @@ interface VerifyProps {
     email_id: string; 
     code: string;
 }
+interface ResetPasswordProps {
+    code: string;
+    password: string;
+}
 export default async function RegisterUser({name,email,password,username}:RegisterUserParams): Promise<void> {
     try {
         const response = await axios.post("http://localhost:5000/user/register", {
@@ -61,4 +65,17 @@ export async function ForgotPassword(email:string): Promise<void> {
     } catch (error: any) {
         return error.message;
     }
+}
+
+export async function ResetPassword({code, password}: ResetPasswordProps) {
+    try {
+        const response = await axios.post("http://localhost:5000/user/resetpassword", {
+            code,
+            password,
+        });
+        return response.data;
+    } catch (error: any) {
+        return error.message;
+    }
+    
 }
