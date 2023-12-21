@@ -181,7 +181,6 @@ const RegisterPage = () => {
         setVerification(true);
         setRegisterError("");
         setShowPopover(true);
-
         // router.push("/auth/login");
       }
     } catch (error: any) {
