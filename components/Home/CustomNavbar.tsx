@@ -20,7 +20,7 @@ import {
 
 const CustomNavbar = () => {
   return (
-    <Navbar isBordered>
+    <Navbar className="mt-4">
       <div className="flex justify-center">
         <div className="flex gap-3">
           <div className="w-72 flex items-center">

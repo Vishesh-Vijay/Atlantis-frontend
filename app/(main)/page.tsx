@@ -27,13 +27,13 @@ export default function Home() {
       {token||googleToken ? (
         <>
         <div className="h-full"> 
+         
+          <CarousalMain />
           <Button
             onClick={
               handleLogout
             }
           >SIGNOUT</Button>
-          <CarousalMain />
-          
         </div>
         <div>
           
