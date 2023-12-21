@@ -22,6 +22,7 @@ import {useRouter} from "next/navigation"
 import { IoLogOutOutline } from "react-icons/io5";
 
 const CustomNavbar = () => {
+  const [isMicOn,setIsMicOn] = React.useState(false);
   const router = useRouter();
   const handleLogout = () => {
     console.log("logout");
@@ -29,7 +30,9 @@ const CustomNavbar = () => {
     if (localStorage.getItem("googleToken"))
       localStorage.removeItem("googleToken");
     router.push("/auth/login");
+    
   };
+ 
   return (
     <Navbar className="mt-4">
       <div className="flex justify-center">
@@ -45,8 +48,18 @@ const CustomNavbar = () => {
             />
           </div>
 
-          <span className=" pl-3 flex items-center pointer-events-none">
-            <Mic size={18} className="text-gray-600" />
+          <span
+            className="pl-3 flex items-center pointer-events-none"
+            onClick={() => setIsMicOn(!isMicOn)}
+          >
+            <Mic
+              size={18}
+              className={
+                isMicOn
+                  ? "text-red-600 cursor-pointer"
+                  : "text-gray-600 cursor-pointer"
+              }
+            />
           </span>
         </div>
       </div>
@@ -84,9 +97,17 @@ const CustomNavbar = () => {
           <DropdownMenu aria-label="Profile Actions" variant="faded">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold text-cen ter italic">Signed in as</p>
-              <p className="font-semibold text-center italic">zoey@example.com</p>
+              <p className="font-semibold text-center italic">
+                zoey@example.com
+              </p>
             </DropdownItem>
-            <DropdownItem key="settings" className="bg-white rounded-lg" onClick={()=>{router.push('/profile')}}>
+            <DropdownItem
+              key="settings"
+              className="bg-white rounded-lg"
+              onClick={() => {
+                router.push("/profile");
+              }}
+            >
               <span className=" text-center flex items-center justify-center">
                 <CgProfile className="inline-block mr-1" />
                 Profile

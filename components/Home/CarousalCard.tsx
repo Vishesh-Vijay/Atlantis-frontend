@@ -44,7 +44,7 @@ const CarousalCard = ({ title, author, viewers, image,tags }: CarousalCardProps)
               {tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-gray-300 px-1 py-1 text-xs rounded-md"
+                  className="bg-violet-900 px-1 py-1 text-xs rounded-md"
                 >
                   {tag}
                 </span>
