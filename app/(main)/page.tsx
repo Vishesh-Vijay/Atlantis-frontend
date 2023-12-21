@@ -37,6 +37,7 @@ export default function Home() {
             timeAgo={10}
             description="gamer0121 is a variety streamer based in the UK who effortlessly provides a fun and entertaining environment to everyone, with the help of a friendly and welcoming community. She enjoys engaging with chat and putting her own spin on the content she creates, no matter what game she plays. Come say"
             tags={["English", "Adventure", "FPS"]}
+            backgroundImage="https://images.unsplash.com/photo-1628539331962-bb6843c400d6?q=80&w=3131&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             />
             <div className="w-full max-h-full h-full p-4 space-y-8">
               <div className="w-full h-1/3">
