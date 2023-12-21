@@ -48,7 +48,7 @@ export async function LoginUser({email,password}:LoginUserParams): Promise<void>
 export async function Verify({email_id,code}:VerifyProps):Promise<void> {
     try {
         const response = await axios.post("http://localhost:5000/user/verify", {
-            email_id,
+            email:email_id,
             code,
         });
         return response.data;

@@ -23,7 +23,25 @@ export default function Home() {
       localStorage.removeItem("googleToken");
     router.push("/auth/login");
   };
-
+  const liveChannels = [{
+    id: 1,
+    name: "Channel 1jbndfkjbdjkbdkjndkjbdfkjboldfjbfjb",
+    description: "vishesh",
+    viewers: 770,
+    image: "test.jpg",
+  }, {
+    id: 2,
+    name: "Channel 2",
+    description: "vishesh",
+    viewers: 770,
+    image: "test.jpg",
+  }, {
+    id: 3,
+    name: "Channel 3",
+    description: "vishssh",
+    viewers: 770,
+    image: "test.jpg",
+  },];
   return (
     <>
       {token || googleToken ? (
@@ -45,25 +63,27 @@ export default function Home() {
                   <span className="text-purple-500">Live Channels</span>{" "}
                   {`we think you'll like`}
                 </h2>
-                <div className="flex justify-between items-center gap-4 my-4">
-                  <div className="w-full h-1/3 flex justify-around items-center">
-                    <CarousalCard />
-                  </div>
-                  <div className="w-full h-1/3 flex justify-around items-center">
-                    <CarousalCard />
-                  </div>
-                  <div className="w-full h-1/3 flex justify-around items-center">
-                    <CarousalCard />
-                  </div>
-                  <div className="w-full h-1/3 flex justify-around items-center">
-                    <CarousalCard />
-                  </div>
+                <div className="flex gap-x-6 items-center  my-4">
+                  {liveChannels.map((channel) => {
+                    return (
+                      <div key={channel.id} className="h-1/3 flex-shrink-0 inline-block justify-start items-center">
+                        <CarousalCard
+                          title={channel.name}
+                          author={channel.description}
+                          viewers={channel.viewers}
+                          image={channel.image}
+                        />
+                      </div>
+                    );
+                  })}
+
+                
                 </div>
               </div>
-              
             </div>
           </div>
           <div></div>
+          <Button onClick={handleLogout}>SIGNOUT</Button>
         </>
       ) : null}
     </>
