@@ -26,7 +26,7 @@ export default function Home() {
     <>
       {token||googleToken ? (
         <>
-        <div className=""> 
+        <div className="h-full"> 
           <Button
             onClick={
               handleLogout
