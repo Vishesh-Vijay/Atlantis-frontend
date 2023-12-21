@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="w-full">
           <Navbar />
         </div>
-        <NextUIProvider>
+        <NextUIProvider className="w-full h-full">
           <div className="w-full h-full">{children}</div>
         </NextUIProvider>
       </div>

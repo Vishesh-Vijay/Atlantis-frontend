@@ -25,10 +25,11 @@ const RegisterPopover = ({email_id}:RegisterPopoverProps) => {
   
   const handleSubmit = async () => {
     try {
+      console.log(email_id,code);
       const response: any = await Verify({email_id,code});
       
       if (response) {
-        console.log("User verified")
+        console.log(response.message);
         // router.push('/auth/login')
         setVerifyError("");
         
