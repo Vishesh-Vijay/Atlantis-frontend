@@ -47,7 +47,7 @@ export default function Home() {
       {token || googleToken ? (
         <>
           <div className="h-full">
-            <Button onClick={handleLogout}>SIGNOUT</Button>
+            {/* <Button onClick={handleLogout}>SIGNOUT</Button> */}
             <CarousalMain 
             username="username"
             typeOfStream="GTA Online"
@@ -60,10 +60,10 @@ export default function Home() {
             <div className="w-full max-h-full h-full p-4 space-y-8">
               <div className="w-full h-1/3">
                 <h2 className="font-bold text-lg">
-                  <span className="text-purple-500">Live Channels</span>{" "}
+                  <span className="text-purple-500 ml-8 mr-1">Live Channels</span>{" "}
                   {`we think you'll like`}
                 </h2>
-                <div className="flex gap-x-6 items-center  my-4">
+                <div className="flex space-x-8 items-center mx-8 my-4">
                   {liveChannels.map((channel) => {
                     return (
                       <div key={channel.id} className="h-1/3 flex-shrink-0 inline-block justify-start items-center">
@@ -72,6 +72,7 @@ export default function Home() {
                           author={channel.description}
                           viewers={channel.viewers}
                           image={channel.image}
+                          
                         />
                       </div>
                     );
@@ -82,7 +83,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div></div>
+  
           <Button onClick={handleLogout}>SIGNOUT</Button>
         </>
       ) : null}
