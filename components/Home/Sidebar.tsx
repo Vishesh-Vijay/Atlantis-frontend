@@ -12,9 +12,10 @@ import { IoTrophyOutline } from "react-icons/io5";
 import { HiOutlinePaintBrush } from "react-icons/hi2";
 import { GrChannel } from "react-icons/gr";
 import Image from 'next/image';
+import { useRouter,usePathname } from 'next/navigation';
 const Sidebar = () => {
-  
-  const [highlight, setHighlight] = React.useState("Home");
+  const router = useRouter();
+  const pathname = usePathname();
   const channels = ["Channel 1", "Channel 2", "Channel 3", "Channel 4", "Channel 5"];
   return (
     <div className="bg-[#2D1851] h-full text-white">
@@ -40,17 +41,17 @@ const Sidebar = () => {
           </h2>
           <div className="space-y-1 px-3">
             <Button
-              variant={highlight === "Home" ? "secondary" : "ghost"}
+              variant={pathname === "/" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Home")}
+              onClick={() => {router.push('/')}}
             >
               <HiOutlineHome className="mr-2 h-4 w-4" />
               Home
             </Button>
             <Button
-              variant={highlight === "Browse" ? "secondary" : "ghost"}
+              variant={pathname === "/browse" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Browse")}
+              onClick={() => {}}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,9 +71,9 @@ const Sidebar = () => {
               Browse
             </Button>
             <Button
-              variant={highlight === "Prime" ? "secondary" : "ghost"}
+              variant={pathname === "/prime" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Prime")}
+              onClick={() => {}}
             >
               <MdOutlineWorkspacePremium className="mr-2 h-4 w-4" />
               Atlantis Prime
@@ -85,41 +86,41 @@ const Sidebar = () => {
           </h2>
           <ScrollArea className="space-y-1 h-28 px-3">
             <Button
-              variant={highlight === "Games" ? "secondary" : "ghost"}
+              variant={pathname === "/categories/games" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Games")}
+              onClick={() => {}}
             >
               <CgGames className="mr-2 h-4 w-4" />
               Games
             </Button>
             <Button
-              variant={highlight === "IRL" ? "secondary" : "ghost"}
+              variant={pathname === "/categories/irl" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("IRL")}
+              onClick={() => {}}
             >
               <CiMicrophoneOn className="mr-2 h-4 w-4" />
               IRL
             </Button>
             <Button
-              variant={highlight === "Music" ? "secondary" : "ghost"}
+              variant={pathname === "/categories/music" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Music")}
+              onClick={() => {}}
             >
               <HiOutlineMusicalNote className="mr-2 h-4 w-4" />
               Music
             </Button>
             <Button
-              variant={highlight === "Esports" ? "secondary" : "ghost"}
+              variant={pathname === "Esports" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Esports")}
+              onClick={()=>{}}
             >
               <IoTrophyOutline className="mr-2 h-4 w-4" />
               Esports
             </Button>
             <Button
-              variant={highlight === "Creative" ? "secondary" : "ghost"}
+              variant={pathname === "/categories/creative" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => setHighlight("Creative")}
+              onClick={() => {}}
             >
               <HiOutlinePaintBrush className="mr-2 h-4 w-4" />
               Creative
@@ -135,9 +136,9 @@ const Sidebar = () => {
               {channels?.map((playlist, i) => (
                 <Button
                   key={`${playlist}-${i}`}
-                  variant={highlight === playlist ? "secondary" : "ghost"}
+                  variant={pathname === `/yourchannels/${playlist}` ? "secondary" : "ghost"}
                   className="w-full flex items-center justify-start font-normal"
-                  onClick={() => setHighlight(playlist)}
+                  onClick={() => {}}
                 >
                   <GrChannel className="mr-2 h-4 w-4" />
                   {playlist}

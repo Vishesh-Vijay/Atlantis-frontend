@@ -68,7 +68,7 @@ const CustomNavbar = () => {
         </div>
         <Dropdown
           placement="bottom-end"
-          className="border border-gray-200 bg-gray-300 rounded-2xl"
+          className="border border-gray-200 bg-violet-200 rounded-2xl"
         >
           <DropdownTrigger>
             <Avatar
@@ -83,10 +83,10 @@ const CustomNavbar = () => {
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="faded">
             <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold text-cen ter italic">Signed in as</p>
+              <p className="font-semibold text-center italic">zoey@example.com</p>
             </DropdownItem>
-            <DropdownItem key="settings" className="bg-white rounded-lg">
+            <DropdownItem key="settings" className="bg-white rounded-lg" onClick={()=>{router.push('/profile')}}>
               <span className=" text-center flex items-center justify-center">
                 <CgProfile className="inline-block mr-1" />
                 Profile

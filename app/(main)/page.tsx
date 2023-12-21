@@ -17,25 +17,32 @@ export default function Home() {
   }, [token, googleToken, router]);
 
   
-  const liveChannels = [{
-    id: 1,
-    name: "Channel 1jbndfkjbdjkbdkjndkjbdfkjboldfjbfjb",
-    description: "vishesh",
-    viewers: 770,
-    image: "test.jpg",
-  }, {
-    id: 2,
-    name: "Channel 2",
-    description: "vishesh",
-    viewers: 770,
-    image: "test.jpg",
-  }, {
-    id: 3,
-    name: "Channel 3",
-    description: "vishssh",
-    viewers: 770,
-    image: "test.jpg",
-  },];
+  const liveChannels = [
+    {
+      id: 1,
+      name: "Channel 1jbndfkjbdjkbdkjndkjbdfkjboldfjbfjb",
+      description: "vishesh",
+      viewers: 770,
+      image: "test.jpg",
+      tags: ["English", "Adventure", "FPS"],
+    },
+    {
+      id: 2,
+      name: "Channel 2",
+      description: "vishesh",
+      viewers: 770,
+      image: "test.jpg",
+      tags: ["English", "Adventure", "FPS"],
+    },
+    {
+      id: 3,
+      name: "Channel 3",
+      description: "vishssh",
+      viewers: 770,
+      image: "test.jpg",
+      tags: ["English", "Adventure", "FPS"],
+    },
+  ];
   return (
     <>
       {token || googleToken ? (
@@ -56,7 +63,7 @@ export default function Home() {
                   <span className="text-purple-500 ml-8 mr-1">Live Channels</span>{" "}
                   {`we think you'll like`}
                 </h2>
-                <div className="flex space-x-8 items-center mx-8 my-4">
+                <div className="flex space-x-4 items-center mx-8 my-4">
                   {liveChannels.map((channel) => {
                     return (
                       <div key={channel.id} className="h-1/3 flex-shrink-0 inline-block justify-start items-center">
@@ -65,7 +72,7 @@ export default function Home() {
                           author={channel.description}
                           viewers={channel.viewers}
                           image={channel.image}
-                          
+                          tags={channel.tags} 
                         />
                       </div>
                     );
