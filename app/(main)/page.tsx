@@ -57,7 +57,7 @@ export default function Home() {
             tags={["English", "Adventure", "FPS"]}
             backgroundImage="https://images.unsplash.com/photo-1628539331962-bb6843c400d6?q=80&w=3131&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             />
-            <div className="w-full max-h-full h-full p-4 px-12 space-y-8">
+            <div className="w-full max-h-full h-full p-4 px-5 space-y-8">
               <div className="w-full h-1/3">
                 <h2 className="font-bold text-lg">
                   <span className="text-purple-500 ml-8 mr-1">Live Channels</span>{" "}
