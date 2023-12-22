@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,15 +24,36 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { getUserDataByToken } from "@/utils/api";
 
 const Profile = () => {
-  const [image, setImage] = useState("/profile.jpg");
+  const [image, setImage] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
   const [username, setUsername] = useState("bichhooo123");
   const [bio, setBio] = useState("");
   const handleUsernameChange = (value: string) => {
     setUsername(value);
   };
+  const [userData, setUserData] = useState({} as any);
+
+  const getUserData = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if(!token) return;
+    try {
+      const response: any = await getUserDataByToken(token);
+      console.log(response);
+      if(response.status === 200) {setUserData(response.data)
+      setImage(response.data.url)
+      } 
+    } catch (error) {
+      console.log(error); 
+    }
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, []);
   const handleBioChange = (value: string) => {
     setBio(value);
   };
@@ -44,6 +65,8 @@ const Profile = () => {
     console.log("Account deleted");
   };
   return (
+    <>
+    {userData && (
     <div className="py-4">
       <div>
         <div>
@@ -51,13 +74,13 @@ const Profile = () => {
         </div>
 
         <Card className="w-2/3 flex justify-between items-center">
-          <div className="w-1/3 flex justify-center">
+          <div className="w-1/3 flex justify-center p-4">
             <Image
               src={image}
               alt="profile"
               width={200}
               height={200}
-              className="rounded-full object-contain"
+              className="rounded-full object-contain w-[200px] h-[200px]"
             />
           </div>
           <div className="w-2/3">
@@ -83,7 +106,7 @@ const Profile = () => {
               <Button
                 variant="outline"
                 onClick={() => {
-                  setImage("/profile.jpg");
+                  setImage(userData.url);
                   setUploadedImage("");
                 }}
               >
@@ -105,7 +128,12 @@ const Profile = () => {
               <div className="grid w-full items-center gap-4">
                 <div className="flex justify-between items-center space-y-1.5">
                   <h1 className="w-1/4 mt-1">Name</h1>
-                  <h1 className="w-3/4 font-bold">Vishesh Vijayvargiya</h1>
+                  <h1 className="w-3/4 font-bold">{userData.name}</h1>
+                </div>
+                <hr className="bg-gray-200 h-0.5" />
+                <div className="flex justify-between items-center space-y-1.5">
+                  <h1 className="w-1/4 mt-1">Email</h1>
+                  <h1 className="w-3/4 font-bold">{userData.email}</h1>
                 </div>
                 <hr className="bg-gray-200 h-0.5" />
                 <div className="flex justify-between items-center space-y-1.5">
@@ -117,7 +145,7 @@ const Profile = () => {
                     name="username"
                     type="text"
                     className="w-3/4"
-                    value={username}
+                    value={userData.username}
                     onChange={(e) => handleUsernameChange(e.target.value)}
                   />
                 </div>
@@ -172,7 +200,8 @@ const Profile = () => {
           </AlertDialog>
         </div>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 };
 
