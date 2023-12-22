@@ -14,7 +14,9 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { useState } from "react";
 const Profile = () => {
-  const [image,setImage] = useState("/profile.jpg");
+  const [image, setImage] = useState(
+    "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+  );
   const [uploadedImage,setUploadedImage] = useState("");
   const handleInputImageChange = (file:any) => {
     console.log(URL.createObjectURL(file));
@@ -57,7 +59,7 @@ const Profile = () => {
               <Button
                 variant="outline"
                 onClick={() => {
-                  setImage("/profile.jpg");
+                  setImage("https://i.pravatar.cc/150?u=a042581f4e29026704d");
                   setUploadedImage("");
                 }}
               >
