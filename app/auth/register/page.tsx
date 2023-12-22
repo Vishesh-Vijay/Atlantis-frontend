@@ -176,13 +176,13 @@ const RegisterPage = () => {
         password,
         username,
       });
-      if (response) {
+      if (response.status == 200) {
         // setIsRegistered(true);
         setVerification(true);
         setRegisterError("");
         setShowPopover(true);
         console.log(response);
-
+        
         // router.push("/auth/login");
       }
     } catch (error: any) {

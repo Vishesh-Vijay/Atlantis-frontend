@@ -84,9 +84,9 @@ const LoginPage = () => {
     try {
       const response: any = await LoginUser({ email, password });
       console.log(response);
-      if (response) {
+      if (response.status==201) {
         setLoginError("");
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response.data.token);
         if (window.history.replaceState) {
           window.history.replaceState({}, "", "/");
         }

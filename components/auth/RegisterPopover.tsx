@@ -28,8 +28,8 @@ const RegisterPopover = ({email_id}:RegisterPopoverProps) => {
        console.log(email_id, code);
       const response: any = await Verify({email_id,code});
       console.log(response); 
-      if (response) {
-        // router.push('/auth/login')
+      if (response.status === 200) {
+        router.push('/auth/login')
        
         setVerifyError("");
         

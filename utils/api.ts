@@ -21,13 +21,13 @@ interface ResetPasswordProps {
 }
 export default async function RegisterUser({name,email,password,username}:RegisterUserParams): Promise<void> {
     try {
-        const response = await axios.post("http://localhost:5000/user/register", {
+        const response:any = await axios.post("http://localhost:5000/user/register", {
             name,
             username,
             email,
             password,
         });
-        return response.data;
+        return response;
     } catch (error: any) {
         return error.message;
     }
@@ -35,11 +35,11 @@ export default async function RegisterUser({name,email,password,username}:Regist
 
 export async function LoginUser({email,password}:LoginUserParams): Promise<void> {
     try {
-        const response = await axios.post("http://localhost:5000/user/login", {
+        const response:any = await axios.post("http://localhost:5000/user/login", {
             email,
             password,
         });
-        return response.data;
+        return response;
     } catch (error: any) {
         return error.message;
     }
@@ -47,11 +47,11 @@ export async function LoginUser({email,password}:LoginUserParams): Promise<void>
 
 export async function Verify({email_id,code}:VerifyProps):Promise<void> {
     try {
-        const response = await axios.post("http://localhost:5000/user/verify", {
+        const response:any = await axios.post("http://localhost:5000/user/verify", {
             email:email_id,
             code,
         });
-        return response.data;
+        return response;
     } catch (error: any) {
         return error.message;
     }
