@@ -1,5 +1,5 @@
-'use client'
-import React from 'react'
+"use client";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,29 +13,43 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Profile = () => {
-  const [image,setImage] = useState("/profile.jpg");
-  const [uploadedImage,setUploadedImage] = useState("");
-  const [username,setUsername] = useState("bichhooo123");
-  const [bio,setBio] = useState("");
-  const handleUsernameChange = (value:string) => {
+  const [image, setImage] = useState("/profile.jpg");
+  const [uploadedImage, setUploadedImage] = useState("");
+  const [username, setUsername] = useState("bichhooo123");
+  const [bio, setBio] = useState("");
+  const handleUsernameChange = (value: string) => {
     setUsername(value);
-  }
-  const handleBioChange = (value:string) => {
+  };
+  const handleBioChange = (value: string) => {
     setBio(value);
-  }
-  const handleInputImageChange = (file:any) => {
+  };
+  const handleInputImageChange = (file: any) => {
     console.log(URL.createObjectURL(file));
     setUploadedImage(URL.createObjectURL(file));
-  }
+  };
+  const handleDeleteAccount = () => {
+    console.log("Account deleted");
+  };
   return (
     <div className="py-4">
       <div>
         <div>
           <h1 className="text-lg font-semibold mb-2">Profile Picture</h1>
         </div>
-        
+
         <Card className="w-2/3 flex justify-between items-center">
           <div className="w-1/3 flex justify-center">
             <Image
@@ -90,6 +104,11 @@ const Profile = () => {
             <form className="w-full">
               <div className="grid w-full items-center gap-4">
                 <div className="flex justify-between items-center space-y-1.5">
+                  <h1 className="w-1/4 mt-1">Name</h1>
+                  <h1 className="w-3/4 font-bold">Vishesh Vijayvargiya</h1>
+                </div>
+                <hr className="bg-gray-200 h-0.5" />
+                <div className="flex justify-between items-center space-y-1.5">
                   <Label htmlFor="username" className="w-1/4">
                     Change Username
                   </Label>
@@ -130,12 +149,31 @@ const Profile = () => {
             Completely deactivate your account
           </p>
         </div>
-        <div className='w-1/4'>
-            <Button variant="outline" color="danger" className='bg-red-500 text-white'>Deactivate Account</Button>
+        <div className="w-1/4">
+          <AlertDialog>
+            <AlertDialogTrigger className="bg-red-500 text-white p-2 px-2 rounded-lg">
+              Deactivate Account
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDeleteAccount}>
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Profile
+export default Profile;
