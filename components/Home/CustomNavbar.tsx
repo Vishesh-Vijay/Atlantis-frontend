@@ -108,7 +108,7 @@ const CustomNavbar = () => {
               onClick={() => {
                 router.push("/profile");
               }}
-            >
+            >  
               <span className=" text-center flex items-center justify-center">
                 <User className="inline-block mr-1  text-gray-800 text-sm" />
                 Profile

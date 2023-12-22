@@ -73,7 +73,7 @@ const Sidebar = () => {
             <Button
               variant={pathname === "/prime" ? "secondary" : "ghost"}
               className="w-full flex items-center justify-start"
-              onClick={() => {}}
+              onClick={() => {router.push('/prime')}}
             >
               <MdOutlineWorkspacePremium className="mr-2 h-4 w-4" />
               Atlantis Prime
