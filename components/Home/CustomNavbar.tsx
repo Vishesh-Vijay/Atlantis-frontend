@@ -3,11 +3,12 @@
 import * as React from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
 ;
-import { SearchIcon , Mic, BellRing, Airplay} from "lucide-react";
+import { SearchIcon , Mic, BellRing, Airplay, User, LogOut} from "lucide-react";
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CgProfile } from "react-icons/cg";
+
 
 import {
   NavigationMenu,
@@ -109,7 +110,7 @@ const CustomNavbar = () => {
               }}
             >
               <span className=" text-center flex items-center justify-center">
-                <CgProfile className="inline-block mr-1" />
+                <User className="inline-block mr-1  text-gray-800 text-sm" />
                 Profile
               </span>
             </DropdownItem>
@@ -120,7 +121,7 @@ const CustomNavbar = () => {
               className="bg-white rounded-lg text-center mt-1"
             >
               <span className="text-center flex items-center justify-center">
-                <IoLogOutOutline className="inline-block mr-1" />
+                <LogOut className="inline-block mr-1 text-gray-800 text-lg" />
                 Logout
               </span>
             </DropdownItem>
