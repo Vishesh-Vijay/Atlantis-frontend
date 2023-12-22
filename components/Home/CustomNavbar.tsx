@@ -8,6 +8,7 @@ import { SearchIcon , Mic, BellRing, Airplay, User, LogOut} from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CgProfile } from "react-icons/cg";
+import { IoSettingsOutline } from "react-icons/io5";
 
 
 import {
@@ -106,12 +107,12 @@ const CustomNavbar = () => {
               key="settings"
               className="bg-white rounded-lg"
               onClick={() => {
-                router.push("/profile");
+                router.push("/settings/profile");
               }}
             >  
               <span className=" text-center flex items-center justify-center">
-                <User className="inline-block mr-1  text-gray-800 text-sm" />
-                Profile
+                <IoSettingsOutline className="inline-block mr-1  text-gray-800 w-5" />
+                Settings
               </span>
             </DropdownItem>
             <DropdownItem
@@ -121,7 +122,7 @@ const CustomNavbar = () => {
               className="bg-white rounded-lg text-center mt-1"
             >
               <span className="text-center flex items-center justify-center">
-                <LogOut className="inline-block mr-1 text-gray-800 text-lg" />
+                <LogOut className="inline-block mr-1 text-gray-800 w-5" />
                 Logout
               </span>
             </DropdownItem>
