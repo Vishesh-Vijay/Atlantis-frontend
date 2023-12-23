@@ -43,7 +43,7 @@ const CustomNavbar = () => {
     if (!token) return;
     try {
       const response: any = await getUserDataByToken(token);
-      if (response.status === 200) {
+      if (response.status === 201) {
         setUserData(response.data);
         setImage(response.data.url);
       }
