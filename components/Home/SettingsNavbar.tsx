@@ -27,11 +27,11 @@ const SettingsNavbar = () => {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/settings/channels" legacyBehavior passHref>
+          <Link href="/settings/videos" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               <div className="flex flex-col justify-between items-center">
-                <span className="text-lg"> Channels</span>
-                {pathname === "/settings/channels" && (
+                <span className="text-lg"> Videos</span>
+                {pathname === "/settings/videos" && (
                   <hr className="w-full h-2 border-gray-500" />
                 )}
               </div>
