@@ -31,8 +31,7 @@ const CustomNavbar = () => {
   const handleLogout = () => {
     console.log("logout");
     if (localStorage.getItem("token")) localStorage.removeItem("token");
-    if (localStorage.getItem("googleToken"))
-      localStorage.removeItem("googleToken");
+   
     router.push("/auth/login");
     
   };

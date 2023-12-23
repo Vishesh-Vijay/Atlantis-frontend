@@ -50,6 +50,7 @@ export async function LoginUser({
       email,
       password,
     });
+    console.log(response.data);
     return response;
   } catch (error: any) {
     return error.message;

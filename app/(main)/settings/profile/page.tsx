@@ -42,6 +42,7 @@ const Profile = () => {
     if(!token) return;
     try {
       const response: any = await getUserDataByToken(token);
+      console.log(response);
       if(response.status === 200) {setUserData(response.data)
       setImage(response.data.url)
       } 
