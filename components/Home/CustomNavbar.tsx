@@ -44,6 +44,7 @@ const CustomNavbar = () => {
     try {
       const response: any = await getUserDataByToken(token);
       if (response.status === 201) {
+        console.log(response.data);
         setUserData(response.data);
         setImage(response.data.url);
       }

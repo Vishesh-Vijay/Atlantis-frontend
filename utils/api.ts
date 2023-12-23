@@ -19,6 +19,16 @@ interface ResetPasswordProps {
   code: string;
   password: string;
 }
+
+interface UpdateProfileProps {
+  username: string;
+  email: string;
+  bio: string;
+  file: File;
+  userId: string;
+  token: string;
+
+}
 export default async function RegisterUser({
   name,
   email,
@@ -110,6 +120,27 @@ export async function getUserDataByToken(token: string): Promise<void> {
         return response
     }
     catch(error: any){
+        return error.message
+    }
+}
+
+export async function updateProfileById({username,email,bio,file,userId,token}:UpdateProfileProps){
+    try{
+        console.log({username,email,bio,userId,token})
+        const response:any = await axios.put(`http://localhost:5000/user/edit/${userId}`,{
+            username,
+            email,
+            bio,
+            file
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }
+    catch(error:any){
         return error.message
     }
 }
