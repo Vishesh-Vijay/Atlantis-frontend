@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import {useRouter} from "next/navigation"
 import { IoLogOutOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { getUserDataByToken } from "@/utils/api";
 
 const CustomNavbar = () => {
   const [isMicOn,setIsMicOn] = React.useState(false);
@@ -34,6 +36,25 @@ const CustomNavbar = () => {
     router.push("/auth/login");
     
   };
+  const [userData, setUserData] = useState({} as any);
+  const [image, setImage] = useState("");
+  const getUserData = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (!token) return;
+    try {
+      const response: any = await getUserDataByToken(token);
+      if (response.status === 200) {
+        setUserData(response.data);
+        setImage(response.data.url);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
  
   return (
     <Navbar className="mt-4">
@@ -86,19 +107,18 @@ const CustomNavbar = () => {
           className="border border-gray-200 bg-violet-200 rounded-2xl"
         >
           <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
+            {image && <Image
+              className="transition-transform rounded-full w-8 h-8"
               color="secondary"
-              name="Jason Hughes"
-              size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
+              alt="pfp"
+              width={40}
+              height={40}
+              src={image}
+            />}
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="faded">
             <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold text-cen ter italic">Signed in as</p>
+              <p className="font-semibold text-center italic">Signed in as</p>
               <p className="font-semibold text-center italic">
                 zoey@example.com
               </p>
