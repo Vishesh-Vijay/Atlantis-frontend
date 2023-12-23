@@ -99,21 +99,13 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleGoogleLogin = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
     try {
-      const result = await auth.signInWithPopup(provider);
-      const token = await auth?.currentUser?.getIdToken(true);
-      if (token) {
-        localStorage.setItem("googleToken", token);
-
-        if (window.history.replaceState) {
-          window.history.replaceState({}, "", "/");
-        }
-        router.push("/");
-      }
-    } catch (error: any) {
+      window.open(
+        `http://localhost:5000/user/google/callback`,
+        "_self"
+      );
+    } catch (error) {
       console.error(error);
-      setGoogleLoginError(error.message);
     }
   };
 
