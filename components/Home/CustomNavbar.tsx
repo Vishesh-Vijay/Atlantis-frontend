@@ -120,7 +120,7 @@ const CustomNavbar = () => {
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold text-center italic">Signed in as</p>
               <p className="font-semibold text-center italic">
-                zoey@example.com
+                {userData.email}
               </p>
             </DropdownItem>
             <DropdownItem
