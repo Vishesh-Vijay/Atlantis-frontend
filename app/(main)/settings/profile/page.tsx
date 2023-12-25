@@ -25,16 +25,18 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { getUserDataByToken } from "@/utils/api";
-import { updateProfileById } from "@/utils/api";
+import { updateProfileById,deleteUserById } from "@/utils/api";
+import { useRouter } from "next/navigation";
 const Profile = () => {
   const [image, setImage] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
-  const [username, setUsername] = useState("bichhooo123");
+  const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [email, setEmail] = useState("")
   const handleUsernameChange = (value: string) => {
     setUsername(value);
   };
+  const router = useRouter();
   const [userData, setUserData] = useState({} as any);
 
   const getUserData = async () => {
@@ -59,11 +61,25 @@ const Profile = () => {
     setBio(value);
   };
   const handleInputImageChange = (file: any) => {
-    console.log(URL.createObjectURL(file));
-    setUploadedImage(URL.createObjectURL(file));
+    console.log(file);
+    setUploadedImage(file);
   };
   const handleDeleteAccount = () => {
-    console.log("Account deleted");
+    try {
+       const id = userData.id;
+       const token = localStorage.getItem("token");
+       if (!token) return;
+       const response: any = deleteUserById({ id, token });
+       if (response.status == 200) {
+         console.log(response.data);
+         localStorage.removeItem("token");
+         window.location.href = "/auth/login";
+       }  
+    } catch (error) {
+      console.log(error); 
+    }
+    
+
   };
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -71,12 +87,17 @@ const Profile = () => {
   const handleUpdateProfile = async () => {
     if(!isFormValid()) return;
     try {
-      const file = new File([uploadedImage], "profile.jpg", {type: "image/jpeg"})
+     const formData = new FormData();
+     //formData.append('test', "testing");
+     formData.append("file", uploadedImage);
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("bio", bio);
       const userId = userData.id;
       const token = localStorage.getItem("token");
       if(!token) return;
-      console.log(email,username,bio,file,userId)
-      const response: any = await updateProfileById({email,username,bio,file,userId,token})
+      console.log(email,username,bio,formData,userId)
+      const response: any = await updateProfileById({formData,userId,token})
       if(response.status === 201) {
         console.log(response.data)
         setUserData((prev:any) => ({...prev, ...response.data}))
@@ -126,8 +147,11 @@ const Profile = () => {
                           name="pfp"
                           type="file"
                           onChange={(e) => {
-                            if (e.target.files)
+                            if (e.target.files){
+                              console.log(e.target.files[0]);
                               handleInputImageChange(e.target.files[0]);
+                            }
+                              
                           }}
                         />
                       </div>

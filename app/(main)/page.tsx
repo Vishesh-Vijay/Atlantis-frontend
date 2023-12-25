@@ -10,12 +10,15 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!token && !googleToken) {
-      router.push("/auth/login");
-    }
-    console.log(token, googleToken);
-  }, [token, googleToken, router]);
+    const handleTokenExpiration = () => {
+      if (!token && !googleToken) {
+        router.push("/auth/login");
+      }
+      console.log(token, googleToken);
+    };
 
+    handleTokenExpiration();
+  }, [token, googleToken, router]);
   
   const liveChannels = [
     {

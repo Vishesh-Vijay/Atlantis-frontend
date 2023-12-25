@@ -21,11 +21,14 @@ interface ResetPasswordProps {
 }
 
 interface UpdateProfileProps {
-  username: string;
-  email: string;
-  bio: string;
-  file: File;
+  formData:FormData ;
   userId: string;
+  token: string;
+
+}
+
+interface DeleteUserProps {
+  id: string;
   token: string;
 
 }
@@ -124,16 +127,33 @@ export async function getUserDataByToken(token: string): Promise<void> {
     }
 }
 
-export async function updateProfileById({username,email,bio,file,userId,token}:UpdateProfileProps){
+export async function updateProfileById({formData,userId,token}:UpdateProfileProps){
     try{
-        console.log({username,email,bio,userId,token})
-        const response:any = await axios.put(`http://localhost:5000/user/edit/${userId}`,{
-            username,
-            email,
-            bio,
-            file
-        },
-        {
+        console.log({userId,token,formData})
+        const response: any = await axios.put(
+          `http://localhost:5000/user/edit/${userId}`,
+          {
+          
+             formData,
+          },
+          {
+              headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+              Accept: "application/json",
+            },
+          }
+        );
+        return response
+    }
+    catch(error:any){
+        return error.message
+    }
+}
+
+export async function deleteUserById({id,token}:DeleteUserProps):Promise<void>{
+    try{
+        const response:any = await axios.delete(`http://localhost:5000/user/delete/${id}`,{
             headers: {
                 Authorization: `Bearer ${token}`
             }
